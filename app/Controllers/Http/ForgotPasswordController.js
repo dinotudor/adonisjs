@@ -15,12 +15,20 @@ class ForgotPasswordController {
 
       await user.save();
 
-      await Mail.send([""], {}, message => {
-        message
-          .to(user.email)
-          .from("dino@dino.com", "Dino | Developer")
-          .subject("Password recovery");
-      });
+      await Mail.send(
+        ["emails.forgot_password"],
+        {
+          email,
+          token: user.token,
+          link: `${request.input("redirect_url")}?token={user.token}`
+        },
+        message => {
+          message
+            .to(user.email)
+            .from("dino@dino.com", "Dino | Developer")
+            .subject("Password recovery");
+        }
+      );
     } catch (err) {
       return response
         .status(err.status)
