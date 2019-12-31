@@ -1,5 +1,6 @@
 "use strict";
 
+const moment = require("moment");
 const crypto = require("crypto");
 const User = use("App/Models/User");
 const Mail = use("Mail");
@@ -58,13 +59,11 @@ class ForgotPasswordController {
 
       await user.save();
     } catch (err) {
-      return response
-        .status(err.status)
-        .send({
-          error: {
-            message: "Something went wrong while reseting your password"
-          }
-        });
+      return response.status(err.status).send({
+        error: {
+          message: "Something went wrong while reseting your password"
+        }
+      });
     }
   }
 }
