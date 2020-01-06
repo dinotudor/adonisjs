@@ -10,13 +10,13 @@ class FileController {
 
       const upload = request.file("file", { size: "2mb" });
 
-      const fileName = `${Date.now()}.${upload.subtybe}`;
+      const fileName = `${Date.now()}.${upload.subtype}`;
 
       await upload.move(Helpers.tmpPath("uploads"), {
         name: fileName
       });
 
-      if (!upload.move()) {
+      if (!upload.moved()) {
         throw upload.error();
       }
 
@@ -24,7 +24,7 @@ class FileController {
         file: fileName,
         name: upload.clientName,
         type: upload.type,
-        subtybe: upload.subtybe
+        subtybe: upload.subtype
       });
 
       return file;
