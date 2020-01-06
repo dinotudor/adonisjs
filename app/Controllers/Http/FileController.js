@@ -6,30 +6,30 @@ const Helpers = use("Helpers");
 class FileController {
   async store({ request, response }) {
     try {
-      if (!request.file('file')) return
+      if (!request.file("file")) return;
 
-      const upload = request.file('file', { size: '2mb' })
+      const upload = request.file("file", { size: "2mb" });
 
-      const fileName = `${Date.now()}.${upload.subtype}`
+      const fileName = `${Date.now()}.${upload.subtybe}`;
 
-      await upload.move(Helpers.tmpPath('uploads'), {
+      await upload.move(Helpers.tmpPath("uploads"), {
         name: fileName
-      })
+      });
 
       if (!upload.move()) {
-        throw upload.error()
+        throw upload.error();
       }
 
       const file = await File.create({
         file: fileName,
         name: upload.clientName,
-        type: upload.type
-        subtype: upload.subtype
-      })
+        type: upload.type,
+        subtybe: upload.subtybe
+      });
 
-      return file
+      return file;
     } catch (err) {
-      return response.status(err.status).send({  message: "Upload failed"})
+      return response.status(err.status).send({ message: "Upload failed" });
     }
   }
 }
