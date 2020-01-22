@@ -13,7 +13,9 @@ class ProjectController {
    * @param {View} ctx.view
    */
   async index({ request, response, view }) {
-    const projects = await Project.all();
+    const projects = await Project.query()
+      .with("user")
+      .fetch();
 
     return projects;
   }
