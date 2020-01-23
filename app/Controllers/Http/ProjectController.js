@@ -82,7 +82,16 @@ class ProjectController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request }) {
+    const project = await Project.findOrFail(params.id);
+    const data = request.only(["title", "description"]);
+
+    project.merge(data);
+
+    await project.save();
+
+    return project;
+  }
 
   /**
    * Delete a project with id.
