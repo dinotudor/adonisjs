@@ -58,6 +58,9 @@ class ProjectController {
   async show({ params }) {
     const project = await Project.findOrFail(params.id);
 
+    await project.load("user");
+    await project.load("tasks");
+
     return project;
   }
 
