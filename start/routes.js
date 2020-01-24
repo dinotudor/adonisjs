@@ -14,4 +14,5 @@ Route.group(() => {
   Route.post("/files", "FileController.store");
 
   Route.resource("projects", "ProjectController").apiOnly();
+  Route.resource("projects.task", "TaskController").apiOnly();
 }).middleware(["auth"]);
