@@ -68,7 +68,11 @@ class TaskController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params }) {
+    const task = await Task.findOrFail(params.id);
+
+    return task;
+  }
 
   /**
    * Render a form to update an existing task.
@@ -88,7 +92,22 @@ class TaskController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const task = await Task.findOrFail(params.id);
+    const data = await request.only([
+      "user_id",
+      "title",
+      "description",
+      "due_date",
+      "file_id"
+    ]);
+
+    task.merge(data);
+
+    await task.save();
+
+    return task;
+  }
 
   /**
    * Delete a task with id.
