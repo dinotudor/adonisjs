@@ -117,7 +117,11 @@ class TaskController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params }) {
+    const task = await Task.findOrFail(params.id);
+
+    await task.delete();
+  }
 }
 
 module.exports = TaskController;
