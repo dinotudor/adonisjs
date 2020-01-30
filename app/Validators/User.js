@@ -1,14 +1,14 @@
 "use strict";
 
 class User {
-  get ValidatorAll() {
+  get validateAll() {
     return true;
   }
 
   get rules() {
     return {
-      username: "require|unique:users",
-      email: "require|email|unique:users",
+      username: "required|unique:users",
+      email: "required|email|unique:users",
       password: "required|confirmed:users"
     };
   }

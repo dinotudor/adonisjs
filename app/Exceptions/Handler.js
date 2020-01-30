@@ -1,6 +1,8 @@
-'use strict'
+"use strict";
 
-const BaseExceptionHandler = use('BaseExceptionHandler')
+const Env = use("Env");
+const Youch = use("Youch");
+const BaseExceptionHandler = use("BaseExceptionHandler");
 
 /**
  * This class handles all exceptions thrown during
@@ -20,8 +22,8 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async handle (error, { request, response }) {
-    response.status(error.status).send(error.message)
+  async handle(error, { request, response }) {
+    return response.status(error.status).send(error.messages);
   }
 
   /**
@@ -34,8 +36,18 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async report (error, { request }) {
+  async report(error, { request }) {
+    if (error.name === "ValidationException") {
+      return response.status(error.status).send(error.message);
+    }
+    if (Env.get("NODE_ENV") === "development") {
+      const youch = new Youch(error, request.request);
+      const errorJSON = await youch.toJSON();
+
+      return response.status(error.status).send(errorJSON);
+    }
+    return response.status(error.status);
   }
 }
 
-module.exports = ExceptionHandler
+module.exports = ExceptionHandler;
