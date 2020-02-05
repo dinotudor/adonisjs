@@ -1,11 +1,16 @@
-'use strict'
+"use strict";
 
 class ResetPassword {
-  get rules () {
+  get validateAll() {
+    return true;
+  }
+
+  get rules() {
     return {
-      // validation rules
-    }
+      token: "required",
+      password: "required|confirmed"
+    };
   }
 }
 
-module.exports = ResetPassword
+module.exports = ResetPassword;

@@ -1,11 +1,16 @@
-'use strict'
+"use strict";
 
 class ForgotPassword {
-  get rules () {
+  get validateAll() {
+    return true;
+  }
+
+  get rules() {
     return {
-      // validation rules
-    }
+      email: "required|email",
+      redirect_url: "required|url"
+    };
   }
 }
 
-module.exports = ForgotPassword
+module.exports = ForgotPassword;
