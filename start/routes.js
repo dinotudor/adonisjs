@@ -23,6 +23,6 @@ Route.group(() => {
     .validator(new Map([[["projects.store"], ["Project"]]]));
 
   Route.resource("projects.tasks", "TaskController")
-    .apiOnly();
+    .apiOnly()
     .validator(new Map([[["projects.task.store"], ["Task"]]]));
 }).middleware(["auth"]);
